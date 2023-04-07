@@ -1,0 +1,5 @@
+C:\Users\Admin\Desktop\kursova-master\DB\obj\Debug\netcoreapp3.1\DB.csproj.AssemblyReference.cache
+C:\Users\Admin\Desktop\kursova-master\DB\obj\Debug\netcoreapp3.1\DB.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Desktop\kursova-master\DB\obj\Debug\netcoreapp3.1\DB.AssemblyInfoInputs.cache
+C:\Users\Admin\Desktop\kursova-master\DB\obj\Debug\netcoreapp3.1\DB.AssemblyInfo.cs
+C:\Users\Admin\Desktop\kursova-master\DB\obj\Debug\netcoreapp3.1\DB.csproj.CoreCompileInputs.cache

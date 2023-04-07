@@ -1,0 +1,27 @@
+import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
+import { Home } from './components/Home';
+import {Login} from './components/auth/Login';
+import {Register} from './components/auth/Register';
+import {Profile} from './components/profile/Profile';
+import {ManageUsers} from './components/manage/ManageUsers'
+
+
+import './custom.css'
+
+export default class App extends Component {
+  static displayName = App.name;
+
+  render () {
+    return (
+        <div>
+            <Route exact path='/' component={Login} />
+            <Route exact path='/register' component={Register} />
+            <Route exact path='/home' component={Home} />
+            <Route exact path='/profile' component={Profile} />
+            <Route exact path='/manageUsers' component={ManageUsers} />
+            
+        </div>
+    );
+  }
+}
