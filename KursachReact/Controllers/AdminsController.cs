@@ -9,6 +9,8 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
+using Services.Interfaces;
+using DB.Models;
 
 namespace KursachReact.Controllers
 {
@@ -16,28 +18,26 @@ namespace KursachReact.Controllers
     [ApiController]
     public class AdminsController : Controller
     {
-        /* ApplicationContext db;
 
-        public AdminsController(ApplicationContext context)
+        private IUserRepository userService;
+
+        public AdminsController(IUserRepository _userService)
         {
-            db = context;
+            userService = _userService;
         }
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Admin>>> Get()
+        public async Task<ActionResult<List<User>>> Get()
         {
-            return await db.Set<Admin>().ToListAsync();
+            return await userService.GetAdmins();
         }
-        
+
         [HttpGet]
         [Route("status/{username}")]
         public async Task<ActionResult<bool>> GetStatus(string username)
         {
-            return Ok(db.Set<Admin>().Where(c => c.Username == username).Any());
+            return await userService.GetStatus(username);
         }
-
-        */
-
     }
 }

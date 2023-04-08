@@ -18,81 +18,6 @@ namespace KursachReact.Controllers
     [ApiController]
     public class UsersController : Controller
     {
-        /* ApplicationContext db;
-
-        public UsersController(ApplicationContext context)
-        {
-            db = context;
-        }
-
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> Get()
-        {
-            return await db.Set<User>().ToListAsync();
-        }
-            
-        [HttpPost]
-        [Route("add")]
-        public async Task<IActionResult> AddAccount([Bind] User user)
-        {
-            if (db.Users.Any(c => c.Name == user.Name))
-            {
-                return Ok(false);
-            }
-            
-            
-            User userDb = new User
-            {
-                Name = user.Name,
-                Password = user.Password
-            };
-            
-            db.Users.Add(userDb);
-            db.SaveChanges();
-            return Ok(true);
-        }
-
-        [HttpGet]
-        [Route("validate/{username}_{password}")]
-        public async Task<IActionResult> Validate(string username,string password)
-        {
-            return Ok(db.Users.Any(c => c.Name == username && c.Password == password));
-        }
-        
-        
-        [HttpGet]
-        [Route("getUserId/{username}")]
-        public async Task<IActionResult> GetId(string username)
-        {
-            return Ok(db.Users.Where(c => c.Name == username).FirstOrDefault().Id);
-        }
-        
-        
-        [HttpPost]
-        [Route("editProfile")]
-        public async Task<IActionResult> EditAccount([Bind] User user)
-        {
-            User userDb = db.Users.Where(c => c.Name == user.Name).FirstOrDefault();
-            userDb.Password = user.Password;
-            db.SaveChanges();
-            
-            return Ok(true);
-        }
-        
-        
-        [HttpGet]
-        [Route("remove/{id}")]
-        public async Task<IActionResult> Remove(int id)
-        {
-            db.Users.Remove(db.Users.Where(c => c.Id == id).FirstOrDefault());
-            db.SaveChanges();
-            return Ok(db.Users.ToList());
-        }
-        */
-
-
-
         private IUserRepository userService;
 
         public UsersController(IUserRepository _userService)
@@ -103,13 +28,13 @@ namespace KursachReact.Controllers
         [HttpGet]
         public async Task<ActionResult<List<User>>> Get()
         {
-            return userService.Get();
+            return await userService.Get().Result;
         }
 
         [HttpPost]
         public async Task<ActionResult<User>> Add([Bind]User user)
         {
-            userService.Add(user);
+            await userService.Add(user);
 
             return NoContent();
         }
@@ -118,13 +43,13 @@ namespace KursachReact.Controllers
         [Route("validate")]
         public async Task<ActionResult> Validate([Bind]User user)
         {
-            return Ok(userService.Validate(user));
+            return await Ok(userService.Validate(user));
         }
 
         [HttpPut]
         public async Task<ActionResult<User>> Update(User user)
         {
-            userService.Update(user);
+            await userService.Update(user);
 
             return NoContent();
         }
@@ -132,7 +57,7 @@ namespace KursachReact.Controllers
         [HttpDelete]
         public async Task<ActionResult<User>> Remove(User user)
         {
-            userService.Remove(user);
+            await userService.Remove(user);
 
             return NoContent();
         }

@@ -14,5 +14,7 @@ namespace DB.Models
         
         [AllowNull]
         public int VolonteerInfoID { get; set; }
+
+        public bool IsAdmin { get; set; }
     }
 }

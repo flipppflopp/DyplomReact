@@ -21,13 +21,13 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<VolonteerInfo>>> Get()
         {
-            return volonteerInfoService.Get();
+            return await volonteerInfoService.Get();
         }
 
         [HttpPost]
         public async Task<ActionResult<VolonteerInfo>> Add(VolonteerInfo volonteerInfo)
         {
-            volonteerInfoService.Add(volonteerInfo);
+            await volonteerInfoService.Add(volonteerInfo);
 
             return NoContent();
         }
@@ -35,7 +35,7 @@ namespace WebApi.Controllers
         [HttpPut]
         public async Task<ActionResult<VolonteerInfo>> Update(VolonteerInfo volonteerInfo)
         {
-            volonteerInfoService.Update(volonteerInfo);
+            await volonteerInfoService.Update(volonteerInfo);
 
             return NoContent();
         }
@@ -43,7 +43,7 @@ namespace WebApi.Controllers
         [HttpDelete]
         public async Task<ActionResult<VolonteerInfo>> Remove(VolonteerInfo volonteerInfo)
         {
-            volonteerInfoService.Remove(volonteerInfo);
+            await volonteerInfoService.Remove(volonteerInfo);
 
             return NoContent();
         }

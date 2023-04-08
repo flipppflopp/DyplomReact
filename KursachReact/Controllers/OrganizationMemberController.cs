@@ -21,13 +21,13 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<OrganizationMember>>> Get()
         {
-            return organizationMemberService.Get();
+            return await organizationMemberService.Get();
         }
 
         [HttpPost]
         public async Task<ActionResult<OrganizationMember>> Add(OrganizationMember organizationMember)
         {
-            organizationMemberService.Add(organizationMember);
+            await organizationMemberService.Add(organizationMember);
 
             return NoContent();
         }
@@ -35,7 +35,7 @@ namespace WebApi.Controllers
         [HttpPut]
         public async Task<ActionResult<OrganizationMember>> Update(OrganizationMember organizationMember)
         {
-            organizationMemberService.Update(organizationMember);
+            await organizationMemberService.Update(organizationMember);
 
             return NoContent();
         }
@@ -43,7 +43,7 @@ namespace WebApi.Controllers
         [HttpDelete]
         public async Task<ActionResult<OrganizationMember>> Remove(OrganizationMember organizationMember)
         {
-            organizationMemberService.Remove(organizationMember);
+            await organizationMemberService.Remove(organizationMember);
 
             return NoContent();
         }

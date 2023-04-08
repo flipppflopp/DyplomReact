@@ -6,13 +6,18 @@ namespace Services.Interfaces
 {
     public interface IUserRepository
     {
-        public List<User> Get();
-        public void Add(User user);
+        public Task<Task<List<User>>> Get();
+        public Task Add(User user);
 
-        public bool Validate(User user);
+        public Task<bool> Validate(User user);
 
-        public void Update(User user);
+        public Task Update(User user);
         
-        public void Remove(User user);
+        public Task Remove(User user);
+
+        public Task<List<User>> GetAdmins();
+
+        public Task<bool> GetStatus(string username);
+
     }
 }

@@ -5,12 +5,12 @@ namespace Services.Interfaces
 {
     public interface IVolonteerInfoRepository
     {
-        public List<VolonteerInfo> Get();
+        public Task<List<VolonteerInfo>> Get();
 
-        public void Add(VolonteerInfo info);
+        public Task Add(VolonteerInfo info);
 
-        public void Update(VolonteerInfo info);
+        public Task Update(VolonteerInfo info);
 
-        public void Remove(VolonteerInfo info);
+        public Task Remove(VolonteerInfo info);
     }
 }

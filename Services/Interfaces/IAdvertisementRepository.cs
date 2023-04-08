@@ -5,12 +5,12 @@ namespace Services.Interfaces
 {
     public interface IAdvertisementRepository
     {
-        public List<Advertisement> Get();
+        public Task<List<Advertisement>> Get();
 
-        public void Add(Advertisement advertisement);
+        public Task Add(Advertisement advertisement);
 
-        public void Update(Advertisement advertisement);
+        public Task Update(Advertisement advertisement);
 
-        public void Remove(Advertisement advertisement);
+        public Task Remove(Advertisement advertisement);
     }
 }

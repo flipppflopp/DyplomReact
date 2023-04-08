@@ -5,12 +5,12 @@ namespace Services.Interfaces
 {
     public interface IOrganizationRepository
     {
-        public List<Organization> Get();
+        public Task<List<Organization>> Get();
 
-        public void Add(Organization organization);
+        public Task Add(Organization organization);
 
-        public void Update(Organization organization);
+        public Task Update(Organization organization);
 
-        public void Remove(Organization organization);
+        public Task Remove(Organization organization);
     }
 }

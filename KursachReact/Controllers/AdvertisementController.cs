@@ -21,13 +21,13 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Advertisement>>> Get()
         {
-            return advertisementService.Get();
+            return await advertisementService.Get();
         }
 
         [HttpPost]
         public async Task<ActionResult<Advertisement>> Add(Advertisement advertisement)
         {
-            advertisementService.Add(advertisement);
+            await advertisementService.Add(advertisement);
 
             return NoContent();
         }
@@ -35,7 +35,7 @@ namespace WebApi.Controllers
         [HttpPut]
         public async Task<ActionResult<Advertisement>> Update(Advertisement advertisement)
         {
-            advertisementService.Update(advertisement);
+            await advertisementService.Update(advertisement);
 
             return NoContent();
         }
@@ -43,7 +43,7 @@ namespace WebApi.Controllers
         [HttpDelete]
         public async Task<ActionResult<Advertisement>> Remove(Advertisement advertisement)
         {
-            advertisementService.Remove(advertisement);
+            await advertisementService.Remove(advertisement);
 
             return NoContent();
         }

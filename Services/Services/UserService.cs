@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DB.DB_Context;
 using DB.Models;
+using Microsoft.EntityFrameworkCore;
 using Services.Interfaces;
 
 namespace Services.Services
@@ -15,32 +16,42 @@ namespace Services.Services
             db = context;
         }
         
-        public List<User> Get()
+        public async Task<List<User>> Get()
         {
-            return db.Users.ToList();
+            return await db.Users.ToListAsync();
         }
         
-        public void Add(User user)
+        public async Task Add(User user)
         {
             db.Users.Add(user);
             db.SaveChanges();
         }
 
-        public bool Validate(User user)
+        public async Task<bool> Validate(User user)
         {
             return db.Users.Any(c => c.Name == user.Name && c.Password == user.Password);
         }
 
-        public void Update(User user)
+        public async Task Update(User user)
         {
             db.Users.Update(user);
             db.SaveChanges();
         }
         
-        public void Remove(User user)
+        public async Task Remove(User user)
         {
             db.Users.Remove(user);
             db.SaveChanges();
+        }
+
+        public async Task<List<User>> GetAdmins()
+        {
+            return await db.Users.Where(c => c.IsAdmin == true).ToListAsync();
+        }
+
+        public async Task<bool> GetStatus(string username)
+        {
+            return db.Users.Any(c => c.Name == username && c.IsAdmin == true);
         }
     }
 }

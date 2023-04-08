@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DB.DB_Context;
 using DB.Models;
+using Microsoft.EntityFrameworkCore;
 using Services.Interfaces;
 
 namespace Services.Services
@@ -15,27 +16,27 @@ namespace Services.Services
             db = context;
         }
         
-        public List<VolonteerInfo> Get()
+        public async Task<List<VolonteerInfo>> Get()
         {
-            return db.VolonteerInfos.ToList();
+            return await db.VolonteerInfos.ToListAsync();
         }
 
-        public void Add(VolonteerInfo info)
+        public async Task Add(VolonteerInfo info)
         {
             db.VolonteerInfos.Add(info);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
-        public void Update(VolonteerInfo info)
+        public async Task Update(VolonteerInfo info)
         {
             db.VolonteerInfos.Update(info);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
-        public void Remove(VolonteerInfo info)
+        public async Task Remove(VolonteerInfo info)
         {
             db.VolonteerInfos.Remove(info);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
     }
 }

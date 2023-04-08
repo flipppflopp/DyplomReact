@@ -15,7 +15,6 @@ namespace DB.DB_Context
         
         public DbSet<User> Users { get; set; }
 
-        public DbSet<User> Admins { get; set; }
         public DbSet<VolonteerInfo> VolonteerInfos { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)

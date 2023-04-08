@@ -22,13 +22,13 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<List<Expense>>> Get()
         {
-            return expenseService.Get();
+            return await expenseService.Get();
         }
 
         [HttpPost]
         public async Task<ActionResult<Expense>> Add(Expense expense)
         {
-            expenseService.Add(expense);
+            await expenseService.Add(expense);
 
             return NoContent();
         }
@@ -36,7 +36,7 @@ namespace WebApi.Controllers
         [HttpPut]
         public async Task<ActionResult<Expense>> Update(Expense expense)
         {
-            expenseService.Update(expense);
+            await expenseService.Update(expense);
 
             return NoContent();
         }
@@ -44,7 +44,7 @@ namespace WebApi.Controllers
         [HttpDelete]
         public async Task<ActionResult<Expense>> Remove(Expense expense)
         {
-            expenseService.Remove(expense);
+            await expenseService.Remove(expense);
 
             return NoContent();
         }

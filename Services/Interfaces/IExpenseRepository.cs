@@ -5,12 +5,12 @@ namespace Services.Interfaces
 {
     public interface IExpenseRepository
     {
-        public List<Expense> Get();
+        public Task<List<Expense>> Get();
 
-        public void Add(Expense expense);
+        public Task Add(Expense expense);
 
-        public void Update(Expense expense);
+        public Task Update(Expense expense);
 
-        public void Remove(Expense expense);
+        public Task Remove(Expense expense);
     }
 }

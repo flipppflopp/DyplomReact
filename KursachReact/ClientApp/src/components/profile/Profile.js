@@ -69,7 +69,6 @@ export class Profile extends Component {
     
     renderAdminButtons()
     {
-        debugger
         if(this.state.isAdmin === true){
             return(
                 <div>

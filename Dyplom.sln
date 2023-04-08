@@ -3,16 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KursachReact", "KursachReact\KursachReact.csproj", "{8921C2CA-26F3-4BEB-B8F0-DC5BE6B29339}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dyplom", "KursachReact\Dyplom.csproj", "{8921C2CA-26F3-4BEB-B8F0-DC5BE6B29339}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A6BCBAB0-B63D-447A-80DC-29E049C2A838}"
 	ProjectSection(SolutionItems) = preProject
 		DB\DB.csproj = DB\DB.csproj
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DB", "DB\DB.csproj", "{7560E2A7-6F21-4E01-8F96-093D43EC645E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DB", "DB\DB.csproj", "{7560E2A7-6F21-4E01-8F96-093D43EC645E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{CDA49E9D-D4F6-4367-BA94-5703524F2310}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{CDA49E9D-D4F6-4367-BA94-5703524F2310}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
