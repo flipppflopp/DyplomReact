@@ -28,7 +28,7 @@ namespace KursachReact.Controllers
         [HttpGet]
         public async Task<ActionResult<List<User>>> Get()
         {
-            return await userService.Get().Result;
+            return userService.Get().Result;
         }
 
         [HttpPost]
@@ -43,7 +43,7 @@ namespace KursachReact.Controllers
         [Route("validate")]
         public async Task<ActionResult> Validate([Bind]User user)
         {
-            return await Ok(userService.Validate(user));
+            return Ok(userService.Validate(user));
         }
 
         [HttpPut]

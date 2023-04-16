@@ -23,7 +23,7 @@ namespace Services.Services
         
         public async Task Add(User user)
         {
-            db.Users.Add(user);
+            await db.Users.AddAsync(user);
             db.SaveChanges();
         }
 
@@ -35,13 +35,13 @@ namespace Services.Services
         public async Task Update(User user)
         {
             db.Users.Update(user);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
         
         public async Task Remove(User user)
         {
             db.Users.Remove(user);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
         }
 
         public async Task<List<User>> GetAdmins()
