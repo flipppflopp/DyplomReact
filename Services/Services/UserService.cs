@@ -1,8 +1,12 @@
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using DB.DB_Context;
 using DB.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Services.Interfaces;
 
 namespace Services.Services
@@ -11,9 +15,27 @@ namespace Services.Services
     {
         private readonly ApplicationContext db;
 
+        SymmetricSecurityKey secretKey;
+        SigningCredentials signingCredentials;
+
+        Claim[] claims = new[]
+        {
+                    new Claim(JwtRegisteredClaimNames.Sub, "user_id_here"),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                };
+
         public UserService(ApplicationContext context)
         {
             db = context;
+
+            secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secret_key_here_111"));
+            signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+            claims = new[]
+            {
+                    new Claim(JwtRegisteredClaimNames.Sub, "user_id_here"),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                };
         }
         
         public async Task<List<User>> Get()
@@ -21,15 +43,54 @@ namespace Services.Services
             return await db.Users.ToListAsync();
         }
         
-        public async Task Add(User user)
+        public async Task<string> Add(User user)
         {
-            await db.Users.AddAsync(user);
-            db.SaveChanges();
+            if (!db.Users.Any(c => c.Name == user.Name && c.Password == user.Password))
+            {
+                await db.Users.AddAsync(user);
+
+                db.SaveChanges();
+
+
+                var token = new JwtSecurityToken(
+                    issuer: "issuer_here",
+                    audience: "audience_here",
+                    claims: claims,
+                    expires: DateTime.UtcNow.AddDays(1),
+                    signingCredentials: signingCredentials
+                );
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var stringToken = tokenHandler.WriteToken(token);
+
+                return stringToken;
+            }
+            else 
+            {
+                return "";
+            }
+
         }
 
-        public async Task<bool> Validate(User user)
+        public async Task<string> Validate(User user)
         {
-            return db.Users.Any(c => c.Name == user.Name && c.Password == user.Password);
+            if(db.Users.Any(c => c.Name == user.Name && c.Password == user.Password)) 
+            {
+                var token = new JwtSecurityToken(
+                    issuer: "issuer_here",
+                    audience: "audience_here",
+                    claims: claims,
+                    expires: DateTime.UtcNow.AddDays(1),
+                    signingCredentials: signingCredentials
+                );
+
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var stringToken = tokenHandler.WriteToken(token);
+
+                return stringToken;
+            }
+
+            return "";
         }
 
         public async Task Update(User user)

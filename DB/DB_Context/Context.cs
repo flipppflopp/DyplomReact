@@ -9,10 +9,6 @@ namespace DB.DB_Context
         
         public DbSet<Expense> Expenses { get; set; }
         
-        public DbSet<Organization> Organizations { get; set; }
-        
-        public DbSet<OrganizationMember> OrganizationMembers { get; set; }
-        
         public DbSet<User> Users { get; set; }
 
         public DbSet<VolonteerInfo> VolonteerInfos { get; set; }

@@ -7,9 +7,9 @@ namespace Services.Interfaces
     public interface IUserRepository
     {
         public Task<List<User>> Get();
-        public Task Add(User user);
+        public Task<string> Add(User user);
 
-        public Task<bool> Validate(User user);
+        public Task<string> Validate(User user);
 
         public Task Update(User user);
         

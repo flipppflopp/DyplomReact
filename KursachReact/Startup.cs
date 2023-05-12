@@ -33,8 +33,6 @@ namespace KursachReact
             services.AddScoped<IUserRepository, UserService>();
             services.AddScoped<IAdvertisementRepository, AdvertisementService>();
             services.AddScoped<IExpenseRepository, ExpenseService>();
-            services.AddScoped<IOrganizationRepository, OrganizationService>();
-            services.AddScoped<IOrganizationMemberRepository, OrganizationMemberService>();
             services.AddScoped<IVolonteerInfoRepository, VolonteerInfoService>();
 
 

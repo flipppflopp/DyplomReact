@@ -1,124 +1,134 @@
-﻿import React, { Component } from 'react';
-import './auth.css';
-import { Link, NavLink } from "react-router-dom";
-import { API_URL } from '../../variables'
+﻿import React,{ useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { API_URL } from '../../variables';
+import { connect } from 'react-redux'
 
-export class Register extends Component {
-    static displayName = Register.name;
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: '',
-            password: '',
-            submitPassword: ''
-        };
+function Register(props) {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [submitPassword, setSubmitPassword] = useState('');
 
-        this.handleUsername = this.handleUsername.bind(this);
-        this.handlePassword = this.handlePassword.bind(this);
-        this.handleSubmitPassword = this.handleSubmitPassword.bind(this);
-
-        this.handleSubmit = this.handleSubmit.bind(this);
+    function handleUsername(event) {
+        setUsername(event.target.value);
     }
 
-    handleUsername(event) {
-        this.setState({ username: event.target.value });
+    function handlePassword(event) {
+        setPassword(event.target.value);
     }
 
-    handlePassword(event) {
-        this.setState({ password: event.target.value });
+    function handleSubmitPassword(event) {
+        setSubmitPassword(event.target.value);
     }
 
-    handleSubmitPassword(event) {
-        this.setState({ submitPassword: event.target.value });
-    }
-
-
-
-    handleSubmit(event) {
-
-        if (this.state.password !== this.state.submitPassword) {
-            alert("Incorrect password")
-            this.setState(
-                {
-                    password: '',
-                    submitPassword: ''
-                }
-            )
-        }
-        else
-        {
-            fetch('api/users', {
-                method: 'post',
+    function handleSubmit(event) {
+        if (password !== submitPassword) {
+            alert('Incorrect password');
+            setPassword('');
+            setSubmitPassword('');
+        } else {
+            fetch(`/api/users`, {
+                method: 'POST',
                 body: JSON.stringify({
-                        Id: 0,
-                        Name: this.state.username,
-                        Password: this.state.password,
-                        IsVolonteer: false,
-                        VolonteerInfoID: 0
-                    }),
+                    Id: 0,
+                    Name: username,
+                    Password: password,
+                    IsVolonteer: false,
+                    VolonteerInfoID: 0,
+                    Token: ''
+                }),
                 headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                }
-            }).then((response) => {
-                return response;
-            }).then((data) => {
-                debugger
-                if (data.ok !== true) {
-                    alert("This user is already exist")
-                    this.setState(
-                        {
-                            username: '',
-                            password: '',
-                            submitPassword: ''
-                        }
-                    )
-
-                    return;
-                }
-                else
-                {
-                    let user = 
-                        {
-                            username: this.state.username,
-                            password: this.state.password
-                        }
-                    this.props.history.push("/home", { user: user });
-                }
-            });
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.result === "") {
+                        alert('This user already exists');
+                        setUsername('');
+                        setPassword('');
+                        setSubmitPassword('');
+                    } else {
+                        const user = {
+                            username: username,
+                            token: data,
+                        };
+    
+                        props.setCredentials(user)
+    
+                        props.history.push('/home');
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
         }
         event.preventDefault();
     }
+    
 
+    return (
+        <div>
+            <form onSubmit={handleSubmit}>
+                <div className="container">
+                    <h3>Register Form</h3>
 
+                    <label htmlFor="uname">
+                        <b>Username</b>
+                    </label>
+                    <input
+                        value={username}
+                        onChange={handleUsername}
+                        type="text"
+                        placeholder="Enter Username"
+                        name="uname"
+                        required
+                    />
 
-    render () {
-        return (
-            <div>
-                <form onSubmit={this.handleSubmit}>
-                    <div className="container">
-                        <h3>Register Form</h3>
+                    <label htmlFor="psw">
+                        <b>Password</b>
+                    </label>
+                    <input
+                        value={password}
+                        onChange={handlePassword}
+                        type="password"
+                        placeholder="Enter Password"
+                        name="psw"
+                        required
+                    />
 
+                    <label htmlFor="psw">
+                        <b>Confirm password</b>
+                    </label>
+                    <input
+                        value={submitPassword}
+                        onChange={handleSubmitPassword}
+                        type="password"
+                        placeholder="Enter Password"
+                        name="psw"
+                        required
+                    />
 
-                        <label htmlFor="uname"><b>Username</b></label>
-                        <input value={this.state.username} onChange={this.handleUsername}
-                            type="text" placeholder="Enter Username" name="uname" required />
-
-
-                        <label htmlFor="psw"><b>Password</b></label>
-                        <input value={this.state.password} onChange={this.handlePassword}
-                            type="password" placeholder="Enter Password" name="psw" required />
-
-
-                        <label htmlFor="psw"><b>Confirm password</b></label>
-                        <input value={this.state.submitPassword} onChange={this.handleSubmitPassword}
-                            type="password" placeholder="Enter Password" name="psw" required />
-
-
-                        <button type="submit">Create account</button>
-                        <NavLink tag={Link} className="text-dark" to="/">Already have account?</NavLink>
-                    </div>
-                </form>
-            </div>
-        );
-    }
+                    <button type="submit">Create account</button>
+                    <NavLink tag={Link} className="text-dark" to="/">
+                        Already have account?
+                    </NavLink>
+                </div>
+            </form>
+        </div>
+    );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCredentials: (user) => dispatch({ type: 'SET_CREDENTIALS', payload: user }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

@@ -1,125 +1,112 @@
-﻿import React, { Component } from 'react';
-import {Layout} from "../Layout";
-import API_URL from '../../variables'
+﻿import React, { useEffect, useState } from 'react';
 import './Profile.css';
-import {Link, NavLink} from "react-router-dom";
+import { Link, NavLink } from 'react-router-dom';
+import { connect } from 'react-redux'
 
-export class Profile extends Component {
-    static displayName = Profile.name;
-    constructor(props) {
-        super(props);
-        this.state = {
-            username: this.props.location.state.user.username,
-            password: this.props.location.state.user.password,
-            newPassword: '',
-            isAdmin: null
-        }
+function Profile(props){
+  const [newPassword, setNewPassword] = useState('');
+  const [isAdmin, setIsAdmin] = useState(null);
 
-        this.handlePassword = this.handlePassword.bind(this);
+  useEffect(() => {
+    fetch(`api/admins/status/${props.user.username}`)
+      .then((response) => response.json())
+      .then((data) => setIsAdmin(data));
+  }, [props.user.username]);
 
-        this.handleSubmit = this.handleSubmit.bind(this);
-    };
+  const handlePassword = (event) => {
+    setNewPassword(event.target.value);
+  };
 
-    componentDidMount() {
-        fetch('api/users/getPassword/' + this.props.location.state.user.username)
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                this.setState({ password: data })
-            });
+  const handleSubmit = (event) => {
+    fetch('api/users', {
+      method: 'put',
+      body: JSON.stringify({
+        Id: 0,
+        Name: props.user.username,
+        Password: newPassword,
+        IsVolonteer: false,
+        VolonteerInfoID: 0,
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    }).then((response) => {
+      return response;
+    }).then((data) => {});
+
+    event.preventDefault();
+  };
+
+  const renderAdminButtons = () => {
+    if (isAdmin === true) {
+      return (
+        <div>
+          <NavLink
+            tag={Link}
+            className="btn btn-secondary"
+            to={{
+              pathname: '/manageUsers'
+            }}
+          >
+            Manage users
+          </NavLink>
+        </div>
+      );
+    } else {
+      return <div></div>;
+    }
+  };
+
+  return (
+    <div>
+      <h1>Your profile:</h1>
+      <p>Username: {props.user.username}</p>
+
+      {renderAdminButtons()}
+
+      <NavLink
+        onClick={props.setCredentials({
+          username: '',
+          token: ''
+      })}
+        tag={Link}
+        className="btn btn-secondary"
+        to={{
+          pathname: '/',
+        }}
+
         
+      >
+        Log out
+      </NavLink>
 
-        fetch('api/admins/status/' + this.props.location.state.user.username)
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                this.setState({ isAdmin: data })
-            });
-    }
-    
+      <form className="changeProfileForm" onSubmit={handleSubmit}>
+        <label><b>Password</b></label>
+        <input
+          value={newPassword}
+          onChange={handlePassword}
+          type="password"
+          placeholder="Enter new Password"
+          name="psw"
+          required
+        />
 
-    handlePassword(event) {
-        this.setState({ newPassword: event.target.value });
-    }
+        <button type="submit">Change password</button>
+      </form>
+    </div>
+  );
+};
 
-    handleSubmit(event) 
-    {
-        this.setState({ password: this.state.newPassword });
-        fetch('api/users', {
-            method: 'put',
-            body: JSON.stringify({
-                Id: 0,
-                Name: this.props.location.state.user.username,
-                Password: this.state.newPassword,
-                IsVolonteer: false,
-                VolonteerInfoID: 0
-            }),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        }).then((response) => {
-            return response;
-        }).then((data) => {
-        });
-        event.preventDefault();
-    }
-    
-    
-    renderAdminButtons()
-    {
-        if(this.state.isAdmin === true){
-            return(
-                <div>
-                    <NavLink tag={Link} className="btn btn-secondary"
-                             to={{
-                                 pathname: "/manageUsers",
-                                 state: { user: this.props.location.state.user }
-                             }}>
-                        Manage users
-                    </NavLink>
-                </div>
-        )
-        }
-        else
-        {
-            return (<div></div>)
-        }
-    }
-    
-    
-    render () {
-        return (
-            <Layout user={this.props.location.state.user}>
-                <div>
-                    <h1>Your profile:</h1>
-                    <p>Username: {this.state.username}</p>
-                    <p>Password: {this.state.password}</p>
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCredentials: (user) => dispatch({ type: 'SET_CREDENTIALS', payload: user }),
+  };
+};
 
-                    {this.renderAdminButtons()}
-                    
-                    
-                    <NavLink tag={Link} className="btn btn-secondary"
-                             to={{
-                                 pathname: "/"
-                             }}>
-                        Log out
-                    </NavLink>
-                    
-                    
-                    
-                    <form className="changeProfileForm" onSubmit={this.handleSubmit}>
-                        <label><b>Password</b></label>
-                        <input  value={this.state.newPassword} onChange={this.handlePassword}
-                            type="password" placeholder="Enter new Password" name="psw" required/>
-
-                        <button type="submit">Change password</button>
-                    </form>
-
-                </div>
-            </Layout>
-        );
-    }
-}
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

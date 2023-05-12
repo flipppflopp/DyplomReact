@@ -32,11 +32,9 @@ namespace KursachReact.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> Add([Bind]User user)
+        public async Task<ActionResult<string>> Add([Bind]User user)
         {
-            await userService.Add(user);
-
-            return NoContent();
+            return await userService.Add(user);
         }
 
         [HttpPost]
