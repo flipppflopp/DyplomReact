@@ -1,4 +1,5 @@
 ﻿import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux'
 
 function ManageUsers(props) {
   const [usersList, setUsersList] = useState(null);
@@ -33,7 +34,7 @@ function ManageUsers(props) {
   function renderUserList() {
     if (usersList !== null) {
       return usersList.map((el) =>
-        el.name !== props.location.state.user.username ? (
+        el.name !== props.user.username ? (
           <tr key={el.id}>
             <td>
               <p>{el.id}</p>
@@ -77,4 +78,16 @@ function ManageUsers(props) {
   );
 }
 
-export default ManageUsers;
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCredentials: (user) => dispatch({ type: 'SET_CREDENTIALS', payload: user }),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ManageUsers);

@@ -19,5 +19,7 @@ namespace Services.Interfaces
 
         public Task<bool> GetStatus(string username);
 
+        public Task<bool> CheckToken(User user);
+
     }
 }

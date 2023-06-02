@@ -1,0 +1,31 @@
+.ads {
+    float: left;
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+  }
+
+  .ads > div{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .ads > ul{
+    list-style-type: none;
+  }
+
+.ad {
+  padding: 5%;
+  width: 110%;
+  background-color: #d7d9dc;
+  margin-bottom: 10px;
+}
+
+.ad-photo{
+  width: 200px;
+  height: 200px;
+  float: left;
+  display: flex;
+    flex-direction: column;
+}

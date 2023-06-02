@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("volonteer-infoes")]
+    [Route("api/volonteer-infoes")]
     public class VolonteerInfoController : Controller
     {
         private IVolonteerInfoRepository volonteerInfoService;

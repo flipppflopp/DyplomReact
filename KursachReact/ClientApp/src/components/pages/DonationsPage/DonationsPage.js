@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import './Home.css';
+import '../Home/Home.css';
 
 function DonationsPage() {
 

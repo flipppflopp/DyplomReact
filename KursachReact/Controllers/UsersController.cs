@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Services.Interfaces;
 using DB.Models;
+using Dyplom.Helpers;
+
 
 namespace KursachReact.Controllers
 {
@@ -45,9 +47,12 @@ namespace KursachReact.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<User>> Update(User user)
+        public async Task<ActionResult<User>> Update(object user)
         {
-            await userService.Update(user);
+
+            User userTyped = TypeHelper.ObjToType<User>(user);
+
+            await userService.Update(userTyped);
 
             return NoContent();
         }

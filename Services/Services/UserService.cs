@@ -45,7 +45,7 @@ namespace Services.Services
         
         public async Task<string> Add(User user)
         {
-            if (!db.Users.Any(c => c.Name == user.Name && c.Password == user.Password))
+            if (!db.Users.Any(c => c.Name == user.Name))
             {
                 await db.Users.AddAsync(user);
 
@@ -95,7 +95,9 @@ namespace Services.Services
 
         public async Task Update(User user)
         {
-            db.Users.Update(user);
+            User original = db.Users.Where(c => c.Name == user.Name).Single();
+            original.Password = user.Password;
+            db.Users.Update(original);
             await db.SaveChangesAsync();
         }
         
@@ -109,10 +111,20 @@ namespace Services.Services
         {
             return await db.Users.Where(c => c.IsAdmin == true).ToListAsync();
         }
-
+        
         public async Task<bool> GetStatus(string username)
         {
             return db.Users.Any(c => c.Name == username && c.IsAdmin == true);
         }
+
+        public async Task<bool> CheckToken(User user)
+        {
+            return false;
+        }
+
+
+
+
+
     }
 }

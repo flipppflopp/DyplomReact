@@ -1,0 +1,13 @@
+.categories {
+    float: left;
+    width: 30%;
+    background-color: #d7d9dc;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .categories > div{
+    display: flex;
+    flex-direction: row;
+  }

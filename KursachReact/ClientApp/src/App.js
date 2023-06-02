@@ -1,16 +1,16 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 
-import Home  from './components/Home';
+import Home  from './components/pages/Home/Home';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Profile from './components/profile/Profile';
 import ManageUsers from './components/manage/ManageUsers'
-import DonationsPage from "./components/DonationsPage"
-import VolonteersPage from "./components/VolonteersPage"
+import DonationsPage from "./components/pages/DonationsPage/DonationsPage"
+import VolonteersPage from "./components/pages/VolonteersPage/VolonteersPage"
 
 import './custom.css'
-import Layout from './components/Layout';
+import Layout from './components/Navigation/Layout';
 
 function App() {
   return (
@@ -18,29 +18,29 @@ function App() {
       <Route exact path='/' component={Login} />
       <Route exact path='/register' component={Register} />
 
-      <Route exact path='/home' render={(props) => (
+      <Route exact path='/home' render={() => (
         <Layout>
-          <Home {...props} />
+          <Home />
         </Layout>
       )} />
-      <Route exact path='/profile' render={(props) => (
+      <Route exact path='/profile' render={() => (
         <Layout>
-          <Profile {...props} />
+          <Profile  />
         </Layout>
       )} />
-      <Route exact path='/manageUsers' render={(props) => (
+      <Route exact path='/manageUsers' render={() => (
         <Layout>
-          <ManageUsers {...props} />
+          <ManageUsers  />
         </Layout>
       )} />
-      <Route exact path='/donations' render={(props) => (
+      <Route exact path='/donations' render={() => (
         <Layout>
-          <DonationsPage {...props} />
+          <DonationsPage  />
         </Layout>
       )} />
-      <Route exact path='/volonteers' render={(props) => (
+      <Route exact path='/volonteers' render={() => (
         <Layout>
-          <VolonteersPage {...props} />
+          <VolonteersPage  />
         </Layout>
       )} />
     </div>

@@ -34,6 +34,7 @@ namespace KursachReact
             services.AddScoped<IAdvertisementRepository, AdvertisementService>();
             services.AddScoped<IExpenseRepository, ExpenseService>();
             services.AddScoped<IVolonteerInfoRepository, VolonteerInfoService>();
+            services.AddScoped<ICategoryRepository, CategoryService>();
 
 
             services.AddControllersWithViews();

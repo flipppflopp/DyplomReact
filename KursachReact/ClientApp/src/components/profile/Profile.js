@@ -26,6 +26,7 @@ function Profile(props){
         Password: newPassword,
         IsVolonteer: false,
         VolonteerInfoID: 0,
+        Token: props.user.token
       }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
@@ -65,10 +66,7 @@ function Profile(props){
       {renderAdminButtons()}
 
       <NavLink
-        onClick={props.setCredentials({
-          username: '',
-          token: ''
-      })}
+        
         tag={Link}
         className="btn btn-secondary"
         to={{
@@ -81,7 +79,7 @@ function Profile(props){
       </NavLink>
 
       <form className="changeProfileForm" onSubmit={handleSubmit}>
-        <label><b>Password</b></label>
+        <label><b>Change Password</b></label>
         <input
           value={newPassword}
           onChange={handlePassword}

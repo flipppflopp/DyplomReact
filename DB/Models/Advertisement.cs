@@ -8,12 +8,18 @@ namespace DB.Models
         [Key]
         public int ID { get; set; }
         
-        public string Cathegory { get; set; }
+        public string Category { get; set; }
 
         public string Header { get; set; }
 
         public string Text { get; set; }
 
+        public int CollectedSum { get; set; }
+
+        public int GoalSum { get; set; }
+
         public int VolonteerInfoID { get; set; }
+
+
     }
 }

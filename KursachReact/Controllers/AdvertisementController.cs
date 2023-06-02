@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("advertisements")]
+    [Route("api/advertisements")]
     public class AdvertisementController : Controller
     {
         private IAdvertisementRepository advertisementService;

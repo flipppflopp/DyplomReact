@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace WebApi.Controllers
 {
     [ApiController]
-    [Route("expenses")]
+    [Route("api/expenses")]
     public class ExpenseController : Controller
     {
         private IExpenseRepository expenseService;
