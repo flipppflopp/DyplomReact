@@ -12,7 +12,7 @@ function Layout(props) {
 
   return (
     <div>
-      <NavMenu user={props.user} />
+      <NavMenu user={props.user}/>
       <Container>
         {props.children}
       </Container>

@@ -8,10 +8,12 @@ namespace DB.Models
         [Key]
         public int ID { get; set; }
         
-        public int Amount { get; set; }
+        public double Amount { get; set; }
+
+        public DateTime Date { get; set; }
         
-        public int VolonteerInfoID { get; set; }
-        
-        public string Name { get; set; } = null!;
+        public int UserId { get; set; }
+
+        public int AdId { get; set; }
     }
 }

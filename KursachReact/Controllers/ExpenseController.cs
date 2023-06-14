@@ -25,6 +25,13 @@ namespace WebApi.Controllers
             return await expenseService.Get();
         }
 
+        [HttpGet]
+        [Route("{username}")]
+        public async Task<ActionResult<List<Expense>>> Get(string username)
+        {
+            return await expenseService.GetExpensesByUser(username);
+        }
+
         [HttpPost]
         public async Task<ActionResult<Expense>> Add(Expense expense)
         {

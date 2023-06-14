@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using DB.Models;
 
 namespace Services.Interfaces
@@ -7,9 +6,15 @@ namespace Services.Interfaces
     {
         public Task<List<Advertisement>> Get();
 
+        public Task<Advertisement> GetById(int id);
+
+        public Task<List<Photo>> GetPhotoes(int id);
+
         public Task Add(Advertisement advertisement);
 
         public Task Update(Advertisement advertisement);
+
+        public Task<bool> CreateTransaction(string Username, double Amount, int adId);
 
         public Task Remove(Advertisement advertisement);
     }

@@ -21,6 +21,12 @@ namespace Services.Services
             return await db.Expenses.ToListAsync();
         }
 
+        public async Task<List<Expense>> GetExpensesByUser(string username)
+        {
+            var user = await db.Users.Where(c => c.Name == username).SingleAsync();
+            return await db.Expenses.Where(c => c.UserId == user.Id).ToListAsync();
+        }
+
         public async Task Add(Expense expense)
         {
             await db.Expenses.AddAsync(expense);

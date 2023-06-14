@@ -42,7 +42,14 @@ namespace Services.Services
         {
             return await db.Users.ToListAsync();
         }
-        
+
+        public async Task<double> GetBalance(string username)
+        {
+            var user = await db.Users.Where(c => c.Name == username).SingleAsync();
+
+            return user.Balance;
+        }
+
         public async Task<string> Add(User user)
         {
             if (!db.Users.Any(c => c.Name == user.Name))
@@ -100,7 +107,14 @@ namespace Services.Services
             db.Users.Update(original);
             await db.SaveChangesAsync();
         }
-        
+
+        public async Task FillBalance(string username, double amount)
+        {
+            User user = await db.Users.Where(c => c.Name == username).SingleAsync();
+            user.Balance += amount;
+            db.SaveChanges();
+        }
+
         public async Task Remove(User user)
         {
             db.Users.Remove(user);
@@ -121,10 +135,5 @@ namespace Services.Services
         {
             return false;
         }
-
-
-
-
-
     }
 }

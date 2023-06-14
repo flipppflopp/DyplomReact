@@ -5,9 +5,13 @@ const initialState = {
 function categoriesReducer(state = initialState, action) {
     switch (action.type) {
         case 'SET_CATEGORIES':
+          let categories = []
+          action.payload.map((category) => {
+            categories.push(category.name)
+          })
             return {
                 ...state,
-                categories: action.payload
+                categories: categories
             };
       default:
         return state;

@@ -28,6 +28,13 @@ namespace KursachReact.Controllers
         }
 
         [HttpGet]
+        [Route("get-balance/{username}")]
+        public async Task<ActionResult<double>> GetBalance(string username)
+        {
+            return userService.GetBalance(username).Result;
+        }
+
+        [HttpGet]
         public async Task<ActionResult<List<User>>> Get()
         {
             return userService.Get().Result;
@@ -53,6 +60,17 @@ namespace KursachReact.Controllers
             User userTyped = TypeHelper.ObjToType<User>(user);
 
             await userService.Update(userTyped);
+
+            return NoContent();
+        }
+
+        [HttpPut]
+        [Route("fill-balance")]
+        public async Task<ActionResult> FillBalance(object user_balance)
+        {
+            Username_Amount usernameAmountTyped = TypeHelper.ObjToType<Username_Amount>(user_balance);
+
+            await userService.FillBalance(usernameAmountTyped.Username, usernameAmountTyped.Amount);
 
             return NoContent();
         }

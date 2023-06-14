@@ -24,6 +24,20 @@ namespace WebApi.Controllers
             return await volonteerInfoService.Get();
         }
 
+        [HttpGet]
+        [Route("volonteers/{username}")]
+        public async Task<ActionResult<List<User>>> GetVolonteers(string username)
+        {
+            return await volonteerInfoService.GetVolonteers(username);
+        }
+
+        [HttpGet]
+        [Route("check-status/{id}")]
+        public async Task<ActionResult<User>> GetVolonteerByInfoId(int id)
+        {
+            return await volonteerInfoService.GetVolonteerByInfoId(id);
+        }
+
         [HttpPost]
         public async Task<ActionResult<VolonteerInfo>> Add(VolonteerInfo volonteerInfo)
         {

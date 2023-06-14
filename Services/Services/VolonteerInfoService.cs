@@ -21,6 +21,12 @@ namespace Services.Services
             return await db.VolonteerInfos.ToListAsync();
         }
 
+        public async Task<User> GetVolonteerByInfoId(int id)
+        {
+            var userId = db.VolonteerInfos.Where(c => c.Id == id).Single();
+            return await db.Users.Where(c => c.Id == userId.UserId).SingleAsync();
+        }
+
         public async Task Add(VolonteerInfo info)
         {
             db.VolonteerInfos.Add(info);
@@ -37,6 +43,49 @@ namespace Services.Services
         {
             db.VolonteerInfos.Remove(info);
             await db.SaveChangesAsync();
+        }
+
+        public async Task<List<User>> GetVolonteers(string username)
+        {
+            var volonteerInfoes = new List<VolonteerInfo>();
+
+            if (username != "null")
+            {
+                var user = db.Users.Single(c => c.Name == username);
+
+                var subs = db.Subscriptions.Where(c => c.UserID == user.Id).ToList();
+
+                var viIDs = new List<int>();
+
+                foreach (var sub in subs)
+                {
+                    viIDs.Add(sub.VolonteerID);
+                }
+
+                volonteerInfoes = db.VolonteerInfos.Where(c => viIDs.Contains(c.Id)).ToList();
+            }
+            else
+            {
+                volonteerInfoes = db.VolonteerInfos.ToList();
+            }
+
+            var userIDs = new List<int>();
+            foreach(var vi in volonteerInfoes)
+            {
+                userIDs.Add(vi.UserId);
+            }
+
+            var volonteers = db.Users.Where(c => userIDs.Contains(c.Id));
+
+            foreach (var volonteer in volonteers)
+            {
+                volonteer.Token = "";
+                volonteer.IsAdmin = false;
+                volonteer.Password = "";
+                volonteer.Balance = 0;
+            }
+
+            return volonteers.ToList();
         }
     }
 }

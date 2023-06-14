@@ -2,7 +2,18 @@
     display: flex;
   }
   
-  .child {
+  .parent > div {
     flex-basis: 50%;
+  }
+  
+  .volonteerSection {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .volonteerButton {
+    margin-left: auto;
+    color: gray;
+    width: 70%;
   }
   

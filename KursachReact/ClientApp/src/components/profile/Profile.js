@@ -1,16 +1,28 @@
 ﻿import React, { useEffect, useState } from 'react';
 import './Profile.css';
 import { Link, NavLink } from 'react-router-dom';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { Button } from 'react-bootstrap';
+import FillBalancePopup from "./FillBalancePopup"
 
-function Profile(props){
+function Profile(props) {
   const [newPassword, setNewPassword] = useState('');
   const [isAdmin, setIsAdmin] = useState(null);
+  const [balance, setBalance] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
+
     fetch(`api/admins/status/${props.user.username}`)
       .then((response) => response.json())
       .then((data) => setIsAdmin(data));
+
+    fetch(`api/users/get-balance/${props.user.username}`)
+      .then((response) => response.json())
+      .then((data) => {
+          setBalance(data)
+        });
+    
   }, [props.user.username]);
 
   const handlePassword = (event) => {
@@ -26,14 +38,16 @@ function Profile(props){
         Password: newPassword,
         IsVolonteer: false,
         VolonteerInfoID: 0,
-        Token: props.user.token
+        Token: props.user.token,
       }),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },
-    }).then((response) => {
-      return response;
-    }).then((data) => {});
+    })
+      .then((response) => {
+        return response;
+      })
+      .then((data) => {});
 
     event.preventDefault();
   };
@@ -42,13 +56,7 @@ function Profile(props){
     if (isAdmin === true) {
       return (
         <div>
-          <NavLink
-            tag={Link}
-            className="btn btn-secondary"
-            to={{
-              pathname: '/manageUsers'
-            }}
-          >
+          <NavLink tag={Link} className="btn btn-secondary" to={{ pathname: '/manageUsers' }}>
             Manage users
           </NavLink>
         </div>
@@ -58,6 +66,14 @@ function Profile(props){
     }
   };
 
+  const FillBalanceBtnClick = () => {
+    setIsPopupOpen(true);
+  };
+
+  const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
+  };
+
   return (
     <div>
       <h1>Your profile:</h1>
@@ -65,21 +81,23 @@ function Profile(props){
 
       {renderAdminButtons()}
 
-      <NavLink
-        
-        tag={Link}
-        className="btn btn-secondary"
-        to={{
-          pathname: '/',
-        }}
-
-        
-      >
+      <NavLink tag={Link} className="btn btn-secondary" to={{ pathname: '/' }}>
         Log out
       </NavLink>
 
+      <div className="changeProfileForm">
+        <p>
+          <b>Your balance: {balance}</b>
+        </p>
+        <Button  onClick={FillBalanceBtnClick}>
+          Fill balance
+        </Button>
+      </div>
+
       <form className="changeProfileForm" onSubmit={handleSubmit}>
-        <label><b>Change Password</b></label>
+        <label>
+          <b>Change Password</b>
+        </label>
         <input
           value={newPassword}
           onChange={handlePassword}
@@ -91,10 +109,12 @@ function Profile(props){
 
         <button type="submit">Change password</button>
       </form>
+
+      <FillBalancePopup isPopupOpen={isPopupOpen} togglePopup={togglePopup} setBalance={setBalance} balance={balance}/>
+
     </div>
   );
-};
-
+}
 const mapStateToProps = (state) => {
   return {
     user: state.user,

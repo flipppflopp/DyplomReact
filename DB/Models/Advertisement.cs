@@ -14,12 +14,10 @@ namespace DB.Models
 
         public string Text { get; set; }
 
-        public int CollectedSum { get; set; }
+        public double CollectedSum { get; set; }
 
-        public int GoalSum { get; set; }
+        public double GoalSum { get; set; }
 
         public int VolonteerInfoID { get; set; }
-
-
     }
 }

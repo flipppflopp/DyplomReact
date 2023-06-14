@@ -7,6 +7,8 @@ namespace Services.Interfaces
     {
         public Task<List<Expense>> Get();
 
+        public Task<List<Expense>> GetExpensesByUser(string username);
+
         public Task Add(Expense expense);
 
         public Task Update(Expense expense);

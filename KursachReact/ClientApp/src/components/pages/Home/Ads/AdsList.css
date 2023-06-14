@@ -23,9 +23,16 @@
 }
 
 .ad-photo{
-  width: 200px;
-  height: 200px;
   float: left;
   display: flex;
     flex-direction: column;
+}
+
+.ad-photo > img{
+  width: 40%;
+  height: 40%;
+}
+
+.searchForm{
+  margin-top: 0px !important;
 }

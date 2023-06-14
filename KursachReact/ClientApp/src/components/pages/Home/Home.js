@@ -1,7 +1,5 @@
-import React, { useEffect } from 'react';
-import API_URL from '../../../variables';
+import React from 'react';
 import '../Home/Home.css';
-import { Link, NavLink } from 'react-router-dom';
 import Categories from "./categories/Categories"
 import AdsList from './Ads/AdsList';
 
@@ -12,8 +10,6 @@ function Home(props) {
       <h1>Advertisement</h1>
       <Categories/>
       <AdsList/>
-
-
     </div>
   );
 }
