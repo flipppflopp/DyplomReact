@@ -21,16 +21,64 @@ namespace Services.Services
             return await db.VolonteerInfos.ToListAsync();
         }
 
+        public async Task<VolonteerInfo> GetByName(string username)
+        {
+            var user = await db.Users.SingleAsync(c => c.Name == username);
+
+            return await db.VolonteerInfos.SingleAsync(c => c.UserId == user.Id);
+        }
+
         public async Task<User> GetVolonteerByInfoId(int id)
         {
             var userId = db.VolonteerInfos.Where(c => c.Id == id).Single();
             return await db.Users.Where(c => c.Id == userId.UserId).SingleAsync();
         }
 
+        public async Task<bool> IsSub(string volonteerName, string subName)
+        {
+            var sub = new User();
+
+            var volonteer = new User();
+
+            try
+            {
+                sub = await db.Users.SingleAsync(c => c.Name == subName);
+
+                volonteer = await db.Users.SingleAsync(c => c.Name == volonteerName);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+            return db.Subscriptions.Any(c => c.UserID == sub.Id && c.VolonteerID == volonteer.Id);
+        }
+
         public async Task Add(VolonteerInfo info)
         {
             db.VolonteerInfos.Add(info);
             await db.SaveChangesAsync();
+        }
+
+        public async Task<bool> AddSubscriber(string subName, string volonteerName)
+        {
+
+            if(IsSub(subName, volonteerName).Result == true) 
+            {
+                return false;
+            }
+            else
+            {
+                var sub = await db.Users.SingleAsync(c => c.Name == subName);
+
+                var volonteer = await db.Users.SingleAsync(c => c.Name == volonteerName);
+
+
+                db.Subscriptions.Add(new Subscription { UserID = sub.Id, VolonteerID = volonteer.Id });
+                db.SaveChanges();
+
+                return true;
+            }
         }
 
         public async Task Update(VolonteerInfo info)

@@ -9,8 +9,25 @@ function DonationsPage(props) {
   useEffect(() => {
     fetch("api/expenses/" + props.user.username)
       .then((response) => response.json())
-      .then((data) => setExpenses(data));
-  }, []);
+      .then((data) => 
+      {
+        let expenseList = data;
+        
+        const datetimeString = expenseList[0].date;
+        const datetime = new Date(datetimeString);
+
+        expenseList.date = datetime.toLocaleString("uk-UA", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+        });
+
+        debugger
+        setExpenses(expenseList)
+      });
+  }, [expenses]);
 
   return (
     <div>

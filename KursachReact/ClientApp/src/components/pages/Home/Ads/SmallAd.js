@@ -110,7 +110,7 @@ function SmallAd(props) {
             )}
 
             {volonteerName !== null ? (
-              <Button className="volonteerButton" onClick={toggleVolonteerPopup}>Volonteer: {volonteerName}</Button>
+              <Button className="volonteerButton" onClick={toggleVolonteerPopup}>{volonteerName}</Button>
             ) : (
               <p>Loading...</p>
             )}
@@ -119,7 +119,15 @@ function SmallAd(props) {
       </div>
       <AdPopup ad={props.ad} volonteerName={volonteerName} images={photoUrls} togglePopup={toggleAdPopup} isPopupOpen={adPopupOpen} />
 
-      <VolonteerPopup togglePopup={toggleVolonteerPopup} isPopupOpen={volonteerPopupOpen} />
+
+      {volonteerName !== null ? (
+              <VolonteerPopup volonteerName={volonteerName} 
+                              togglePopup={toggleVolonteerPopup} 
+                              toggleAdPopup={toggleAdPopup} 
+                              isPopupOpen={volonteerPopupOpen} />
+      ) : (
+              <></>
+      )}
     </div>
   );
 }

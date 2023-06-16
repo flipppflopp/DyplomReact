@@ -34,6 +34,13 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
+        [Route("creator/{username}")]
+        public async Task<ActionResult<List<Advertisement>>> GetByVolonteerName(string username)
+        {
+            return await advertisementService.GetByVolonteerName(username);
+        }
+
+        [HttpGet]
         [Route("get-photoes/{id}")]
         public async Task<ActionResult<List<Photo>>> GetPhotoes(int id)
         {

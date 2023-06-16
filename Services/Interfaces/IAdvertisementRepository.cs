@@ -8,6 +8,8 @@ namespace Services.Interfaces
 
         public Task<Advertisement> GetById(int id);
 
+        public Task<List<Advertisement>> GetByVolonteerName(string username);
+
         public Task<List<Photo>> GetPhotoes(int id);
 
         public Task Add(Advertisement advertisement);

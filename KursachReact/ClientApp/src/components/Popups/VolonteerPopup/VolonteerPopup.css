@@ -14,9 +14,17 @@
     background-color: white;
     padding: 20px;
     border-radius: 5px;
+    max-height: 70vh;
+    max-width: 140vh; 
+    overflow: auto; 
   }
+  
   
   .popup button {
     margin-top: 10px;
   }
   
+.ad-btn{
+  text-align: left;
+  width: 20%;
+}

@@ -25,6 +25,14 @@ namespace Services.Services
         {
             return await db.Advertisements.Where(c => c.ID == id).SingleAsync();
         }
+        public async Task<List<Advertisement>> GetByVolonteerName(string username)
+        {
+            var user = await db.Users.SingleAsync(c => c.Name == username);
+
+            var volonteerInfo = await db.VolonteerInfos.SingleAsync(c => c.UserId == user.Id);
+
+            return await db.Advertisements.Where(c => c.VolonteerInfoID == volonteerInfo.Id).ToListAsync();
+        }
 
         public async Task<List<Photo>> GetPhotoes(int id)
         {

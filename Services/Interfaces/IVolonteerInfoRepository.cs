@@ -7,7 +7,13 @@ namespace Services.Interfaces
     {
         public Task<List<VolonteerInfo>> Get();
 
+        public Task<VolonteerInfo> GetByName(string username);
+
         public Task<List<User>> GetVolonteers(string username);
+
+        public Task<bool> IsSub(string volonteerName, string subName);
+
+        public Task<bool> AddSubscriber(string sub, string volonteer);
 
         public Task<User> GetVolonteerByInfoId(int id);
 

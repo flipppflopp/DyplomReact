@@ -39,7 +39,7 @@ function VolonteersPage(props) {
             checked={subscribed}
             onChange={handleCheckboxChange}
           />
-          Checkbox Label
+          Підписки
         </label>
       </div>
 
