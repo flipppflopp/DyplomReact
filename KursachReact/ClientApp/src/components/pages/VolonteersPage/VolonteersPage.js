@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import '../Home/Home.css';
 import { connect } from 'react-redux';
+import { Button } from 'react-bootstrap';
+import VolonteerPopup from "./../../Popups/VolonteerPopup/VolonteerPopup"
 
 function VolonteersPage(props) {
   const [volonteers, setVolonteers] = useState([]);
   const [subscribed, setSubscribed] = useState(false);
+
+  const [volonteerPopupOpen, setVolonteerPopup] = useState(false);
 
   useEffect(() => {
     var username = 'null'
@@ -19,13 +23,17 @@ function VolonteersPage(props) {
       .then((response) => response.json())
       .then((data) => 
         {
-          console.log(data)
           setVolonteers(data)
         });
   }, [subscribed]);
 
   const handleCheckboxChange = () => {
     setSubscribed(!subscribed);
+  };
+
+  
+  const toggleVolonteerPopup = () => {
+    setVolonteerPopup(!volonteerPopupOpen);
   };
 
   return (
@@ -45,13 +53,26 @@ function VolonteersPage(props) {
 
       <ul className="expense-list">
         {volonteers.map((volonteer) => (
+          <div>
           <li key={volonteer.id} className="expense-item">
             <div className="expense-details">
-              <p className="expense-amount">Name: {volonteer.name}</p>
+            <Button className="volonteerButton" onClick={toggleVolonteerPopup}>{volonteer.name}</Button>
             </div>
           </li>
+
+          {volonteer.name !== null ? (
+              <VolonteerPopup volonteerName={volonteer.name} 
+                              togglePopup={toggleVolonteerPopup} 
+                              isPopupOpen={volonteerPopupOpen} />
+          ) : (
+              <></>
+          )}
+
+          </div>
         ))}
       </ul>
+
+      
     </div>
   );
 }

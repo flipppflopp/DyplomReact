@@ -74,8 +74,7 @@ function AdsList(props) {
           else{
             return <></> 
           }
-          
-})}
+        })}
       </ul>
     </div>
   );

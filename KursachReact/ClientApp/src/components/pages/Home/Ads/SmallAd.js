@@ -123,7 +123,6 @@ function SmallAd(props) {
       {volonteerName !== null ? (
               <VolonteerPopup volonteerName={volonteerName} 
                               togglePopup={toggleVolonteerPopup} 
-                              toggleAdPopup={toggleAdPopup} 
                               isPopupOpen={volonteerPopupOpen} />
       ) : (
               <></>

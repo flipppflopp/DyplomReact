@@ -10,21 +10,44 @@ function AdPopup(props) {
   const [volonteerPopupOpen, setVolonteerPopup] = useState(false);
   const [ExpensePopupOpen, setExpensePopupOpen] = useState(false);
 
+  const [photoUrls, setPhotoUrls] = useState([]);
 
   const toggleVolonteerPopup = () => {
     setVolonteerPopup(!volonteerPopupOpen);
   };
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % props.images.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % photoUrls.length);
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + props.images.length) % props.images.length);
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + photoUrls.length) % photoUrls.length);
   };
 
   useEffect(() => {
+    getPhotoes()
   }, [])
+
+  const getPhotoes = async () => {
+    try {
+      const response = await fetch("api/advertisements/get-photoes/" + props.ad.id, {
+        headers: {
+          'Cache-Control': 'no-cache',
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Request failed');
+      }
+  
+      const data = await response.json();
+      
+      setPhotoUrls(data);
+    } catch (error) {
+      console.log(error);
+      setPhotoUrls([]);
+    }    
+  }
 
   const FillBalanceBtnClick = () => {
     setExpensePopupOpen(true);
@@ -34,13 +57,14 @@ function AdPopup(props) {
     setExpensePopupOpen(!ExpensePopupOpen);
   };
 
+  
   return (
     <div>
       {props.isPopupOpen && (
         <div className="popup">
           <div className="popup-content generalAdPopup">
           <div className="gallery">
-            <img src={props.images[currentIndex].url} alt={`Image ${currentIndex + 1}`} />
+            <img src={photoUrls.length === 0 ?  photoUrls[currentIndex].url : ""} alt={`Image ${currentIndex + 1}`} />
 
             <div className="gallery-buttons">
               <button className="gallery-btn" onClick={handlePrev}>&lt;</button>

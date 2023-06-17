@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './VolonteerPopup.css';
 import { connect } from 'react-redux';
 import { Button } from "react-bootstrap";
+import AdPopup from "./../../Popups/AdPopup/AdPopup"
 
 function VolonteerPopup(props) {
   const [desc, setDesc] = useState('');
   const [ads, setAds] = useState([]);
   const [isSub, setIsSub] = useState(true);
-
+  const [adPopupOpen, setAdPopup] = useState(false);
 
   useEffect(() => {
     fetch("api/advertisements/creator/" + props.volonteerName)
@@ -31,7 +32,6 @@ function VolonteerPopup(props) {
   }, []);
 
   const viewAd = () => {
-    props.toggleAdPopup();
     props.togglePopup();
   }
 
@@ -57,6 +57,10 @@ function VolonteerPopup(props) {
         }
       })    
   }
+  
+  const toggleAdPopup = () => {
+    setAdPopup(!adPopupOpen);
+  };
 
   return (
     <div>
@@ -77,6 +81,8 @@ function VolonteerPopup(props) {
               {ads.map((ad, index) => (
                 <div key={index}>
                   <Button className="ad-btn" onClick={viewAd}>{ad.header}</Button>
+      
+                  <AdPopup ad={ad} volonteerName={props.volonteerName} togglePopup={toggleAdPopup} isPopupOpen={adPopupOpen} />
                 </div>
               ))}
             </div>

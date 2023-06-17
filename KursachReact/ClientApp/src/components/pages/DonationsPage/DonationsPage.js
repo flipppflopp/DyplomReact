@@ -13,18 +13,20 @@ function DonationsPage(props) {
       {
         let expenseList = data;
         
-        const datetimeString = expenseList[0].date;
-        const datetime = new Date(datetimeString);
+        expenseList.map((expense) => {
+          const datetimeString = expense.date;
+          const datetime = new Date(datetimeString);
+  
+          expense.date = datetime.toLocaleString("uk-UA", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+          });
+        })
+        
 
-        expenseList.date = datetime.toLocaleString("uk-UA", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-          hour: "numeric",
-          minute: "numeric",
-        });
-
-        debugger
         setExpenses(expenseList)
       });
   }, [expenses]);
