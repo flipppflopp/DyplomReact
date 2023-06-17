@@ -11,6 +11,7 @@ function VolonteerPopup(props) {
   const [adPopupOpen, setAdPopup] = useState(false);
 
   useEffect(() => {
+
     fetch("api/advertisements/creator/" + props.volonteerName)
       .then((response) => response.json())
       .then((data) => {
@@ -29,10 +30,10 @@ function VolonteerPopup(props) {
         setIsSub(data)
       });
     
-  }, []);
+  }, [props.volonteerName]);
 
   const viewAd = () => {
-    props.togglePopup();
+    toggleAdPopup();
   }
 
   const addSub = () => {
@@ -75,7 +76,9 @@ function VolonteerPopup(props) {
                 :
               <Button onClick={addSub} className="ad-btn">Підписатись +</Button>
             }
-
+            
+            
+            { props.fromAd == undefined ?
             <div className="ads-list">
               <h4>Оголошення цього волонтера:</h4>
               {ads.map((ad, index) => (
@@ -86,7 +89,9 @@ function VolonteerPopup(props) {
                 </div>
               ))}
             </div>
-
+            :
+            <></>
+            }
             <button onClick={props.togglePopup}>Закрити</button>
           </div>
         </div>

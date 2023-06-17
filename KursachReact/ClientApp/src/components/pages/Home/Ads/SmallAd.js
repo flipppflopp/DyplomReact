@@ -4,6 +4,7 @@ import "./SmallAd.css"
 import VolonteerPopup from "./../../../Popups/VolonteerPopup/VolonteerPopup"
 import { Button } from 'react-bootstrap';
 import AdPopup from "./../../../Popups/AdPopup/AdPopup"
+import getPhotoes from "./../../../../requests/getPhotoes"
 
 function SmallAd(props) {
   const [volonteerName, setVolonteerName] = useState(null);
@@ -44,24 +45,8 @@ function SmallAd(props) {
   };
 
   const getPhoto = async () => {
-    try {
-      const response = await fetch("api/advertisements/get-photoes/" + props.ad.id, {
-        headers: {
-          'Cache-Control': 'no-cache',
-        },
-      });
-  
-      if (!response.ok) {
-        throw new Error('Request failed');
-      }
-  
-      const data = await response.json();
-      
-      setPhotoUrls(data);
-    } catch (error) {
-      console.log(error);
-      setPhotoUrls([]);
-    }
+    var photoes = await getPhotoes(props.ad.id) 
+    setPhotoUrls(photoes);
   };
   
   const toggleVolonteerPopup = () => {
@@ -117,7 +102,7 @@ function SmallAd(props) {
           </div>
         </div>
       </div>
-      <AdPopup ad={props.ad} volonteerName={volonteerName} images={photoUrls} togglePopup={toggleAdPopup} isPopupOpen={adPopupOpen} />
+      <AdPopup ad={props.ad} volonteerName={volonteerName} togglePopup={toggleAdPopup} isPopupOpen={adPopupOpen} />
 
 
       {volonteerName !== null ? (

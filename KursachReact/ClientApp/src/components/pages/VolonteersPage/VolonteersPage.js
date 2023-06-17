@@ -9,6 +9,7 @@ function VolonteersPage(props) {
   const [subscribed, setSubscribed] = useState(false);
 
   const [volonteerPopupOpen, setVolonteerPopup] = useState(false);
+  const [volonteerName, setVolonteerName] = useState('')
 
   useEffect(() => {
     var username = 'null'
@@ -30,11 +31,16 @@ function VolonteersPage(props) {
   const handleCheckboxChange = () => {
     setSubscribed(!subscribed);
   };
-
   
   const toggleVolonteerPopup = () => {
     setVolonteerPopup(!volonteerPopupOpen);
   };
+  
+  const toggleVolonteerPopupBtn = (event) => {
+    setVolonteerName(event.target.textContent)
+    toggleVolonteerPopup();
+  };
+
 
   return (
     <div>
@@ -56,22 +62,20 @@ function VolonteersPage(props) {
           <div>
           <li key={volonteer.id} className="expense-item">
             <div className="expense-details">
-            <Button className="volonteerButton" onClick={toggleVolonteerPopup}>{volonteer.name}</Button>
+            <Button className="volonteerButton" onClick={toggleVolonteerPopupBtn}>{volonteer.name}</Button>
             </div>
           </li>
+          </div>
+        ))}
+      </ul>
 
-          {volonteer.name !== null ? (
-              <VolonteerPopup volonteerName={volonteer.name} 
+          {volonteerName !== '' ? (
+              <VolonteerPopup volonteerName={volonteerName} 
                               togglePopup={toggleVolonteerPopup} 
                               isPopupOpen={volonteerPopupOpen} />
           ) : (
               <></>
           )}
-
-          </div>
-        ))}
-      </ul>
-
       
     </div>
   );

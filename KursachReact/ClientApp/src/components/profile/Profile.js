@@ -47,7 +47,9 @@ function Profile(props) {
       .then((response) => {
         return response;
       })
-      .then((data) => {});
+      .then((data) => {
+        alert("Ваш пароль успішно змінено!")
+      });
 
     event.preventDefault();
   };
@@ -79,11 +81,7 @@ function Profile(props) {
       <h1>Your profile:</h1>
       <p>Username: {props.user.username}</p>
 
-      {renderAdminButtons()}
-
-      <NavLink tag={Link} className="btn btn-secondary" to={{ pathname: '/' }}>
-        Log out
-      </NavLink>
+      <div className='subsBtn'></div>
 
       <div className="changeProfileForm">
         <p>
@@ -93,6 +91,13 @@ function Profile(props) {
           Fill balance
         </Button>
       </div>
+
+      {renderAdminButtons()}
+
+      <NavLink tag={Link} className="btn btn-secondary" to={{ pathname: '/' }}>
+        Log out
+      </NavLink>
+
 
       <form className="changeProfileForm" onSubmit={handleSubmit}>
         <label>
