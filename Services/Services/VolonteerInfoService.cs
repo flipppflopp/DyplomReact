@@ -128,7 +128,6 @@ namespace Services.Services
             foreach (var volonteer in volonteers)
             {
                 volonteer.Token = "";
-                volonteer.IsAdmin = false;
                 volonteer.Password = "";
                 volonteer.Balance = 0;
             }

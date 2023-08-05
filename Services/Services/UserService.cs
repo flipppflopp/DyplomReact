@@ -1,8 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Threading.Tasks;
 using DB.DB_Context;
 using DB.Models;
 using Microsoft.EntityFrameworkCore;
@@ -123,12 +125,18 @@ namespace Services.Services
 
         public async Task<List<User>> GetAdmins()
         {
-            return await db.Users.Where(c => c.IsAdmin == true).ToListAsync();
+            List<Admin> admins = db.Admins.ToList(); 
+            
+            return await db.Users.Where(c => admins.Any(a => a.UserID == c.Id)).ToListAsync();
         }
         
         public async Task<bool> GetStatus(string username)
         {
-            return db.Users.Any(c => c.Name == username && c.IsAdmin == true);
+            User user = db.Users.Single(c => c.Name == username);
+            
+            List<Admin> admins = db.Admins.ToList();
+            
+            return admins.Any(a => a.UserID == user.Id);
         }
 
         public async Task<bool> CheckToken(User user)

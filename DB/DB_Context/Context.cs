@@ -13,6 +13,8 @@ namespace DB.DB_Context
         public DbSet<Category> Categories { get; set; }
         public DbSet<Photo> Photoes { get; set; }
         public DbSet<Subscription> Subscriptions { get; set; }
+        
+        public DbSet<Admin> Admins { get; set; }
 
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
@@ -150,56 +152,48 @@ namespace DB.DB_Context
                 new User { Id = 1, 
                            Name = "user1", 
                            Password="111",
-                           IsAdmin=false,
                            Token="",
                            Balance = 100
                             },
                 new User { Id = 2,
                            Name = "volonteer1",
                            Password="111",
-                           IsAdmin=false,
                            Token="",
                            Balance = 200
                             },
                 new User { Id = 3,
                            Name = "volonteer2",
                            Password="111",
-                           IsAdmin=false,
                            Token="",
                            Balance = 300
                             },
                 new User { Id = 4,
                            Name = "volonteer3",
                            Password="111",
-                           IsAdmin=false,
                            Token="",
                            Balance = 200
                             },
                 new User { Id = 5,
                            Name = "volonteer4",
                            Password="111",
-                           IsAdmin=false,
                            Token="",
                            Balance = 300
                             },
                 new User { Id = 6,
                            Name = "volonteer5",
                            Password="111",
-                           IsAdmin=false,
                            Token="",
                            Balance = 200
                             },
                 new User { Id = 7,
                            Name = "volonteer6",
                            Password="111",
-                           IsAdmin=false,
                            Token="",
                            Balance = 300
                             },
                 new User { Id = 8,
                            Name = "admin1",
                            Password="111",
-                           IsAdmin=true,
                            Token="",
                            Balance = 400
                             },
